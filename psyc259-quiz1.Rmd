@@ -1,0 +1,124 @@
+---
+title: 'PSYC259: Quiz 1'
+author: "Amanda Mae Woodward"
+date: "10/17/2020"
+output: html_document
+---
+Assignment: For this assignment, you will need to use the skills you have developed in the last two weeks. You **are** allowed to work with each other
+
+**Pt 1**
+1. Create a dataframe containing two columns: one with five desserts and one with your ratings of them.
+```{r}
+food<-c("iceCream", "cake", "brownies", "cookies", "other")
+rating<- c(9,8,10,7,5)
+dessert<- cbind.data.frame(food, rating)
+```
+2. What are the mean and standard deviation of your ratings? 
+```{r}
+mean(dessert$rating)
+sd(dessert$rating)
+```
+
+3. Print just the row containing your highest ranked dessert. 
+```{r}
+dessert[3,]
+```
+
+**Part 2**
+4. Create a function that indicates whether a number is even or odd.
+```{r}
+oddEvenTwo<-function(Num){
+  ifelse(Num%%2==0,"even", "odd")
+}
+oddEvenTwo(19)
+```
+```{r}
+oddEven<- function(Num){
+  if(as.integer(Num/2)==TRUE){
+    print("even")
+}else{print("odd")}
+}
+```
+
+5. Test your function by inputting the number 19,
+```{r}
+oddEven(19)
+```
+
+6. Create a vector containing the numbers 1 through 100.
+```{r}
+Vec<- 1:100
+```
+
+7. Modify your function to test whether all numbers in a vector are even or odd. (hint: this means you need to iterate through a list!) 
+```{r}
+"nrow- expects a dataframe"
+nrow(as.data.frame(Vec))
+length(Vec)
+
+
+oddEven2(Vec)
+for(i in Vec){
+  print(oddEven(i))
+}
+
+```
+
+8. Test your new function using the vector in #6. 
+```{r}
+oddEven2(Vec)
+```
+
+**Pt 3**
+All questions will use the diamonds dataset (in the ggplot2 library).
+
+9. Summarize the dataset.
+```{r}
+library(ggplot2)
+data(diamonds)
+```
+
+10. What type of variable is cut? How do you know? 
+```{r}
+class(diamonds$cut)
+```
+it's an ordered factor- because i clicked "class and it told me". I couldve also found out using summary
+
+11. What type of variable is price? How do you know?
+```{r}
+class(diamonds$price)
+```
+it's an integer. same reasoning as above
+
+12. Create a subset of the dataset that contains all diamonds with a VS1 clarity. 
+```{r}
+dVS<- subset(diamonds, diamonds$clarity=="VS1")
+```
+
+13.How many diamonds are in this dataset? 
+```{r}
+nrow(dVS)
+```
+
+14. Add a column to this subset indicating whether a diamonds' carat is small (less than the first quartile), average (between the first and third quartile), or large (greater than the third quartile).
+```{r}
+a<-summary(dVS$carat)
+str(a)
+library(ggplot2)
+data(diamonds)
+dVS<- subset(diamonds, diamonds$clarity=="VS1")
+
+dVS$size<-NA
+
+for(i in 1:nrow(dVS)){
+  if(dVS$carat[i]<0.38){
+  dVS$size[i]<-"small"
+  } 
+  if(dVS$carat[i]>1.01){
+    dVS$size[i]<- "large"
+  } 
+  if(dVS$carat[i]>0.38 & dVS$carat[i]<1.01){ dVS$size[i]<- "medium"}
+}
+
+```
+

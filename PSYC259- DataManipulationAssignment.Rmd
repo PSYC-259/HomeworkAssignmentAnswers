@@ -1,0 +1,56 @@
+---
+title: "PSYC259- DataManipulationAssignment"
+author: "Amanda Mae Woodward"
+date: "10/28/2020"
+output: html_document
+---
+
+1.Open the sleep dataset in R 
+```{r}
+data(sleep)
+```
+
+2. Is it long or wide format? How do you know? 
+long format- the subject id's repeat and each subject experiences both group 1 and group 2
+3. Transform this data so that it is in the other format. 
+```{r}
+library(tidyr)
+sleepWide<-pivot_wider(sleep,id_cols="ID", names_from= "group", values_from= "extra")
+```
+
+4. Transform your data back to its original format. 
+```{r}
+sleepLong<-pivot_longer(sleepWide,cols = c("1", "2"), names_to= "group", values_to= "extra")
+```
+
+5. Open the Starwars dataset
+```{r}
+data(starwars)
+```
+
+6. Create homeworld as a factor. How many levels does it have? 
+```{r}
+starwars$homeworld<-as.factor(starwars$homeworld)
+levels(starwars$homeworld)
+length(levels(starwars$homeworld))
+```
+48 levels
+
+7. Reorder homeworld so that Naboo is the reference group. 
+```{r}
+starwars$homeworld<- relevel(starwars$homeworld, ref= "Naboo")
+levels(starwars$homeworld)
+```
+
+8. Use mutate to create a column transforming kg to pounds. (hint: you may need to look up the conversion)
+```{r}
+dat<- starwars %>% 
+  mutate(weightinPounds = mass/2.20462)
+```
+
+9. Print a summary of your column from #8
+```{r}
+dat %>% select(name, mass, weightinPounds)
+summary(dat$weightinPounds)
+```
+

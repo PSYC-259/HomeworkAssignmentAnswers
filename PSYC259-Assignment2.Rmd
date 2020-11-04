@@ -1,0 +1,74 @@
+---
+title: "PSYC259_Assignment2"
+author: "Amanda Mae Woodward"
+date: "10/14/2020"
+output: html_document
+---
+Complete the following questions for Assignment 2. Please upload your completed Assignment to GitHub classrooms as **R MarkDown Files**.
+
+1. Create a vector called score that contains every 9th number between 1 and 109. 
+```{r}
+score<- seq(9,109, by=9)
+score
+```
+
+2. Create a vector called participants that contains the numbers 1-12.
+```{r}
+participants<- 1:12
+participants
+```
+
+3. Create a vector called condition that repeats the words control and experimental six times. 
+```{r}
+condition<- rep(c("control", "experimental"),6)
+condition
+```
+
+4. Create a dataframe from the vectors in #1-3.
+```{r}
+dat<-cbind.data.frame( participants, condition,score)
+dat
+```
+
+5. Take the mean of the score column.
+```{r}
+mean(dat$score)
+```
+
+6. Open the mtcars dataframe. Create a subset of data for cars that have 6 cylinders (cyl column).
+```{r}
+data(mtcars)
+car<- subset(mtcars, mtcars$cyl==6)
+```
+
+7. Summarize this subset of data. 
+```{r}
+summary(car)
+```
+
+8. Create a dataframe that contains cars with higher than average miles per gallon (mpg). 
+```{r}
+goodMile<- mtcars[mtcars$mpg>mean(mtcars$mpg),]
+```
+
+9. How many cars are in this subset? 
+```{r}
+nrow(goodMile)
+```
+
+Challenge Questions: 
+10. Open the diamonds dataset. Create a new dataframe that has diamonds greater than 1 carat and an ideal cut. Find the mean and standard deviation of price for this data. 
+```{r}
+library(ggplot2)
+data(diamonds)
+bigDiamond<- diamonds[diamonds$carat>1 & diamonds$cut=="Ideal",]
+mean(bigDiamond$price)
+sd(bigDiamond$price)
+```
+
+11. Create a new dataframe that includes all diamonds with a price between $2500 and $5000. Which color occurs most in this subset? 
+```{r}
+price<-diamonds[diamonds$price>2500 & diamonds$price<5000,]
+summary(price$color)
+```
+F occurs most
